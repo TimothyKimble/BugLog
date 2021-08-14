@@ -14,6 +14,14 @@ class BugsService {
     return bug
   }
 
+  async getNotesIn(query = {}) {
+    const notes = await dbContext.Notes.find(query)
+    if (!notes) {
+      throw new BadRequest('Invalid Id')
+    }
+    return notes
+  }
+
   async edit(body) {
     const bug = await dbContext.Bugs.findByIdAndUpdate(body.id, body, { new: false, runValidators: true })
     if (!bug) {

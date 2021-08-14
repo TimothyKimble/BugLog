@@ -8,7 +8,7 @@ export const Note = new Schema({
   creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true }
 
 },
-{ timestamps: true, toJSON: { virtuals: true } })
+{ timestamps: true, toJSON: { virtuals: false } })
 
 Note.virtual('creator', {
   localField: 'creatorId',
