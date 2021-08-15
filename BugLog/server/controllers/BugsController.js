@@ -15,6 +15,7 @@ export class BugsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.edit)
+      .delete('/:id', this.close)
   }
 
   async getAll(req, res, next) {
@@ -60,6 +61,16 @@ export class BugsController extends BaseController {
       // Do Not Trust the CLient
       req.body.creatorId = req.userInfo.id
       const bug = await bugsService.create(req.body)
+      res.send(bug)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async close(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      const bug = await bugsService.close(req.params.id, req.body)
       res.send(bug)
     } catch (error) {
       next(error)

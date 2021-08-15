@@ -10,19 +10,29 @@ class BugsService {
   }
 
   async getOneBug(id) {
-    console.log(id)
     const res = await api.get('api/bugs/' + id)
     AppState.activeBug = res.data
-    console.log(res.data)
   }
 
   async createBug(newBug) {
     try {
       const res = await api.post('api/bugs', newBug)
+      AppState.activeBug = res.data
       this.getAllBugs()
+      return res.data.id
     } catch (error) {
       logger.log('Could Not Make Bug', error)
     }
+  }
+
+  async editBug(newBug, id) {
+    await api.put('api/bugs/' + id, newBug)
+    this.getAllBugs()
+  }
+
+  async closeBug(id) {
+    await api.delete('api/bugs/' + id)
+    this.getAllBugs()
   }
 }
 export const bugsService = new BugsService()

@@ -6,29 +6,10 @@ export class NotesController extends BaseController {
   constructor() {
     super('api/notes')
     this.router
-      .get('', this.getAll)
-      .get('/:id', this.getAllById)
     // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
-  }
-
-  async getAll(req, res, next) {
-    try {
-      const notes = await notesService.getAll({ creatorId: req.userInfo.id })
-      res.send(notes)
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  async getAllById(req, res, next) {
-    try {
-      const note = await notesService.getAllByBugId(req.params.bugId)
-      res.send(note)
-    } catch (error) {
-      next(error)
-    }
+      .delete('/:id', this.destroy)
   }
 
   async create(req, res, next) {
@@ -36,6 +17,16 @@ export class NotesController extends BaseController {
       req.body.creatorId = req.userInfo.id
       const note = await notesService.create(req.body)
       res.send(note)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async destroy(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      await notesService.destroy(req.params.id, req.body)
+      res.send('Deleted')
     } catch (error) {
       next(error)
     }

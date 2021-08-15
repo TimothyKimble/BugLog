@@ -9,7 +9,7 @@
           <h2>{{ bug.title }}</h2>
           <div class="d-flex row w-100 m-0 my-2 justify-content-between">
             <h5 class="p-1 col-md-6">
-              Reported By:
+              Reported By: {{ bug.creator?.name }}
             </h5>
             <div class="col-md-3 d-flex justify-content-end" v-if="bug.closed === false">
               <h4>Status: <span class="green">Open</span></h4>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import Pop from '../utils/Notifier'
 import { bugsService } from '../services/BugsService'
@@ -50,7 +50,7 @@ export default {
         logger.log(id)
         await bugsService.getOneBug(id)
       } catch (error) {
-        Pop.toast(error, 'error')
+        Pop.toast('Taken to New Bug', 'success')
       }
     })
     return {

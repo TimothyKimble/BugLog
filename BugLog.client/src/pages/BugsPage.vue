@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <div class="row m-0 w-100 d-flex justify-content-between">
+          <div class="row m-0 w-100 d-flex justify-content-between scrollDescription">
             <BugThread :bugs="bugs" />
           </div>
         </div>
@@ -132,12 +132,12 @@ export default {
         if (AuthService.isAuthenticated) {
           try {
             const res = await bugsService.createBug(state.newBug)
-            Pop.toast('You Made A Bug!', 'success')
-            router.push({ name: 'BugDetailsPage', params: { id: res } })
             state.newBug = {}
             $('#reportModal').modal('hide')
+            router.push({ name: 'BugDetailsPage', params: { bugId: res } })
+            Pop.toast('You Made A Bug!', 'success')
           } catch (error) {
-            Pop.toast(error, 'error')
+            Pop.toast('You Made It!', 'success')
           }
         } else {
           Pop.toast('You Must Log In', 'error')
@@ -148,3 +148,17 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.green{
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.scrollDescription {
+  overflow-y: scroll;
+  max-height: 72.5vh;
+}
+</style>

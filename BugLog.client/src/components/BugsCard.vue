@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12 p-2">
     <div class="row w-100 m-0">
-      <router-link class="col-md-3 p-0" :to="{name: 'BugDetailsPage', params: {id: bug.id}}">
+      <router-link class="col-md-3 p-0" :to="{name: 'BugDetailsPage', params: {bugId: bug.id}}">
         <h6>{{ bug.title }}</h6>
       </router-link>
 
