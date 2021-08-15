@@ -9,7 +9,7 @@
           <h2>{{ bug.title }}</h2>
           <div class="d-flex row w-100 m-0 my-2 justify-content-between">
             <h5 class="p-1 col-md-6">
-              Reported By:
+              Reported By: {{ bug.creator.name }}
             </h5>
             <div class="col-md-3 d-flex justify-content-end" v-if="bug.closed === false">
               <h4>Status: <span class="green">Open</span></h4>
@@ -37,43 +37,31 @@ import { AppState } from '../AppState'
 import Pop from '../utils/Notifier'
 import { bugsService } from '../services/BugsService'
 import { logger } from '../utils/Logger'
-import { useRoute } from 'vue-router'
-
 export default {
-  name: 'BugsDetailsPage',
-  setup() {
-    const route = useRoute()
-    const bug = computed(() => AppState.activeBug)
-    onMounted(async() => {
-      try {
-        const id = route.params.id
-        logger.log(id)
-        await bugsService.getOneBug(id)
-      } catch (error) {
-        Pop.toast(error, 'error')
-      }
+  props: {
+    bug: {
+      type: Object,
+      required: true
+    }
+  },
+  setup(props) {
+    const state = reactive({
+      time: '',
+      newBug: {}
+    })
+    onMounted(() => {
+      const old = new Date(props.bug.createdAt)
+      state.time = old.toLocaleTimeString()
     })
     return {
-      bug,
+      state,
       account: computed(() => AppState.account),
-      notes: computed(() => AppState.notes)
-
+      createdDate: computed(() => {
+        const d = new Date(props.bug.createdAt)
+        return new Intl.DateTimeFormat('en-US').format(d)
+        // new TimeAgo(d)
+      })
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.green{
-  color: green;
-}
-
-.red {
-  color: red;
-}
-
-.scrollDescription {
-  overflow-y: scroll;
-  max-height: 25vh;
-}
-</style>

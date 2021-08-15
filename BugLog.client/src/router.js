@@ -22,9 +22,9 @@ const routes = [
     component: loadPage('BugsPage')
   },
   {
-    path: '/bugs/details',
-    name: 'BugsDetailsPage',
-    component: loadPage('BugsDetailsPage')
+    path: '/bugs/:id',
+    name: 'BugDetailsPage',
+    component: loadPage('BugDetailsPage')
   },
   {
     path: '/account',

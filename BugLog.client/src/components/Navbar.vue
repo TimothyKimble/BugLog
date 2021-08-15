@@ -30,7 +30,7 @@
       </ul>
       <span class="navbar-text">
         <button
-          class="btn btn-outline-primary text-uppercase"
+          class="btn btn-outline-primary text-uppercase text-light"
           @click="login"
           v-if="!user.isAuthenticated"
         >

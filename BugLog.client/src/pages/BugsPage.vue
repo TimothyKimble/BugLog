@@ -6,7 +6,7 @@
           <h3>Bugs</h3>
         </div>
         <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-          <button class="btn btn-success">
+          <button class="btn btn-success" data-toggle="modal" data-target="#reportModal">
             <h6>Report</h6>
           </button>
         </div>
@@ -40,8 +40,61 @@
             </div>
           </div>
           <div class="row m-0 w-100 d-flex justify-content-between">
-            <BugsCard />
+            <BugThread :bugs="bugs" />
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade"
+       id="reportModal"
+       tabindex="-1"
+       role="dialog"
+       aria-labelledby="modelTitleId"
+       aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Create New Bug
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6>Reported By {{ account.name }}</h6>
+          <form @submit.prevent="createBug">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                     v-model="state.newBug.title"
+                     placeholder="Title..."
+                     id="title"
+                     name="title"
+                     class="form-control"
+              >
+              <label for="description">Description</label>
+              <textarea v-model="state.newBug.description"
+                        placeholder="Description..."
+                        class="form-control"
+                        name="description"
+                        id="description"
+                        rows="3"
+                        minlength="3"
+                        required
+              ></textarea>
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Save
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -49,7 +102,49 @@
 </template>
 
 <script>
+import { computed, onMounted, reactive } from '@vue/runtime-core'
+import { AppState } from '../AppState'
+import Pop from '../utils/Notifier'
+import { bugsService } from '../services/BugsService'
+import $ from 'jquery'
+import { AuthService } from '../services/AuthService'
+import { useRouter } from 'vue-router'
 export default {
-  name: 'BugsPage'
+  name: 'BugsPage',
+  setup() {
+    const router = useRouter()
+    const state = reactive({
+      newBug: {}
+    })
+    onMounted(async() => {
+      try {
+        await bugsService.getAllBugs()
+      } catch (error) {
+        Pop.toast(error, 'error')
+      }
+    })
+    return {
+      state,
+      bugs: computed(() => AppState.bugs),
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
+      async createBug() {
+        if (AuthService.isAuthenticated) {
+          try {
+            const res = await bugsService.createBug(state.newBug)
+            Pop.toast('You Made A Bug!', 'success')
+            router.push({ name: 'BugDetailsPage', params: { id: res } })
+            state.newBug = {}
+            $('#reportModal').modal('hide')
+          } catch (error) {
+            Pop.toast(error, 'error')
+          }
+        } else {
+          Pop.toast('You Must Log In', 'error')
+          $('#reportModal').modal('hide')
+        }
+      }
+    }
+  }
 }
 </script>
