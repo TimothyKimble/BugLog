@@ -20,11 +20,16 @@
           </div>
         </div>
       </div>
-      <div class="row m-0 w-100 my-4">
+      <div class="row m-0 w-100 my-4 d-flex justify-content-end">
         <div class="col-md-12 p-0 scrollDescription border border-dark">
           <p class="p-2">
             {{ bug.description }}
           </p>
+        </div>
+        <div class="col-md-1 col-1 p-0  border border-dark">
+          <button @click="closeBug" class="btn btn-danger">
+            <h6>Squish Bug</h6>
+          </button>
         </div>
       </div>
     </div>
@@ -56,11 +61,13 @@ export default {
     return {
       bug,
       account: computed(() => AppState.account),
-      notes: computed(() => AppState.notes)
+      notes: computed(() => AppState.notes),
+      id: route.params.id
 
     }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

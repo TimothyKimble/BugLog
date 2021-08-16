@@ -2,6 +2,7 @@ import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 import { convertToQuery } from '../utils/Query'
+import Pop from '../utils/Notifier'
 
 class BugsService {
   async getAllBugs(query = {}) {
@@ -31,8 +32,14 @@ class BugsService {
   }
 
   async closeBug(id) {
-    await api.delete('api/bugs/' + id)
-    this.getAllBugs()
+    try {
+      if (Pop.confirm === true) {
+        await api.delete('api/bugs/' + id)
+        this.getAllBugs()
+      }
+    } catch (error) {
+      logger.log(error, error)
+    }
   }
 }
 export const bugsService = new BugsService()

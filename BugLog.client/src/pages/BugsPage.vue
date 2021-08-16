@@ -134,7 +134,7 @@ export default {
             const res = await bugsService.createBug(state.newBug)
             state.newBug = {}
             $('#reportModal').modal('hide')
-            router.push({ name: 'BugDetailsPage', params: { bugId: res } })
+            router.push({ name: 'BugDetailsPage', params: { id: res } })
             Pop.toast('You Made A Bug!', 'success')
           } catch (error) {
             Pop.toast('You Made It!', 'success')
