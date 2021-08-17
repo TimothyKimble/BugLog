@@ -3,6 +3,7 @@
 @import "./_transitions.scss";
 @import "./_utilities.scss";
 @import "./_overrides.scss";
+@import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text&display=swap');
 
 :root {
   --grey: #f6f6f6;
@@ -21,4 +22,6 @@ main {
   flex-grow: 1;
   display: flex;
   align-items: stretch;
+  font-family: 'STIX Two Text', serif;
+  font-size: 16px;
 }

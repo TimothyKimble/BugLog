@@ -26,19 +26,25 @@ class BugsService {
     }
   }
 
-  async editBug(newBug, id) {
-    await api.put('api/bugs/' + id, newBug)
-    this.getAllBugs()
+  async editBug(id, bug) {
+    try {
+      const res = await api.put('api/bugs/' + id, bug)
+      AppState.activeBug = res.data
+      this.getOneBug(res.data.id)
+    } catch (error) {
+      Pop.toast(error, 'error')
+    }
   }
 
   async closeBug(id) {
     try {
-      if (Pop.confirm === true) {
+      if (await Pop.confirm()) {
         await api.delete('api/bugs/' + id)
-        this.getAllBugs()
+        this.getOneBug(id)
+        await Pop.toast('You Smashed This Bug!', 'success')
       }
     } catch (error) {
-      logger.log(error, error)
+      logger.log(error, 'error')
     }
   }
 }
