@@ -7,7 +7,7 @@ import Pop from '../utils/Notifier'
 class NotesService {
   async getAllNotesInBug(id) {
     const res = await api.get('api/bugs/' + id + '/notes')
-    logger.log(res.data)
+
     AppState.notes = res.data
   }
 
@@ -29,7 +29,7 @@ class NotesService {
         await Pop.toast('You removed this note', 'success')
       }
     } catch (error) {
-      logger.log(error, 'error')
+
     }
   }
 }

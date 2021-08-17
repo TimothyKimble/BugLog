@@ -14,7 +14,7 @@
         </p>
       </div>
       <div class="col-md-2 p-0 text-break d-flex align-items-center justify-content-center" v-if="account.id === note.creator?.id">
-        <button class="btn btn-danger rounded-pill" @click="destroyNote">
+        <button class="btn btn-danger rounded-pill" @click="destroyNote" aria-label="Destroy Note">
           -
         </button>
       </div>
@@ -52,7 +52,6 @@ export default {
           }
         } catch (error) {
           Pop.toast(error, 'error')
-          logger.log(error)
         }
       }
     }

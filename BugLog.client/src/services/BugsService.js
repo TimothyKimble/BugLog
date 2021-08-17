@@ -22,7 +22,7 @@ class BugsService {
       this.getAllBugs()
       return res.data.id
     } catch (error) {
-      logger.log('Could Not Make Bug', error)
+      Pop.toast('Could Not Make Bug', 'error')
     }
   }
 
@@ -44,7 +44,7 @@ class BugsService {
         await Pop.toast('You Smashed This Bug!', 'success')
       }
     } catch (error) {
-      logger.log(error, 'error')
+      Pop.toast(error, 'error')
     }
   }
 }

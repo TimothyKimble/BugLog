@@ -40,7 +40,7 @@
           </h5>
         </div>
         <div class="col-md-3 p-0 mt-3 d-flex justify-content-around" v-if="account.id === bug.creator?.id && bug.closed === false">
-          <button @click="closeBug" class="btn btn-danger">
+          <button @click="closeBug" class="btn btn-danger" aria-label="Close Bug Button">
             <h6>Squish Bug</h6>
           </button>
           <button class="btn btn-info" data-toggle="modal" data-target="#editModal">
@@ -51,7 +51,7 @@
       <div class="row m-0 w-100 bg-warning text-light textShadow CardShadowing d-flex justify-content-center">
         <div class="col-md-2 d-flex justify-content-around align-items-center" v-if="bug.closed === false">
           <h5>Add Note</h5>
-          <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#noteModal">
+          <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#noteModal" aria-label="Add Note Button">
             +
           </button>
         </div>
@@ -105,10 +105,10 @@
                         required
               ></textarea>
             </div>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close Modal for Changing Bug">
               Close
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" aria-label="Save Changes to Bug">
               Save
             </button>
           </form>
@@ -146,10 +146,10 @@
                      class="form-control"
               >
             </div>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close Note Modal">
               Close
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" aria-label="Save Note">
               Save
             </button>
           </form>
@@ -182,14 +182,14 @@ export default {
     onMounted(async() => {
       try {
         const id = route.params.id
-        logger.log(id)
+
         await bugsService.getOneBug(id)
       } catch (error) {
         Pop.toast('Taken to New Bug', 'success')
       }
       try {
         const id = route.params.id
-        logger.log(id)
+
         await notesService.getAllNotesInBug(id)
       } catch (error) {
         Pop.toast('Couldnt get notes', 'error')
@@ -210,7 +210,6 @@ export default {
       },
       async editBug() {
         try {
-          logger.log(route)
           await bugsService.editBug(route.params.id, state.editedBug)
           $('#editModal').modal('hide')
         } catch (error) {
