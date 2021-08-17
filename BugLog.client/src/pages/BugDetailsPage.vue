@@ -18,9 +18,9 @@
               <h1>This Bug Is Completed!</h1>
             </div>
             <div class="col-md-3 d-flex justify-content-around flex-column align-items-center" v-if="bug.closed === false">
-              <h5 class="">
+              <h4 class="">
                 Updated At: {{ new Date (bug.updatedAt).toLocaleString('en-US') }}
-              </h5>
+              </h4>
               <h4>Status: <span class="green">Open</span></h4>
             </div>
             <div class="col-md-3 d-flex justify-content-around flex-column align-items-center" v-else>
@@ -46,9 +46,6 @@
           <button class="btn btn-info" data-toggle="modal" data-target="#editModal">
             <h6>Edit Bug</h6>
           </button>
-        </div>
-        <div class="col-md-3 p-0 mt-3 d-flex justify-content-around" v-else>
-          <h3></h3>
         </div>
       </div>
       <div class="row m-0 w-100 bg-warning text-light textShadow CardShadowing d-flex justify-content-center">
@@ -138,13 +135,12 @@
           </button>
         </div>
         <div class="modal-body">
-          <h6>Created By </h6>
           <form @submit.prevent="createNote">
             <div class="form-group">
-              <label for="body">Body</label>
+              <label for="body">Enter Your Note Here!</label>
               <input type="text"
                      v-model="state.newNote.body"
-                     placeholder="body..."
+                     placeholder="Note..."
                      id="body"
                      name="body"
                      class="form-control"

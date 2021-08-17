@@ -2,9 +2,9 @@
   <div class="col-md-10 p-2 my-3 bg-secondary textShadow CardShadowing grow">
     <div class="row m-0 w-100">
       <div class="col-md-6 p-0 border border-dark">
-        <h6 class="p-3">
+        <h5 class="p-3">
           {{ note.body }}
-        </h6>
+        </h5>
       </div>
 
       <div class="col-md-4 p-0 text-break d-flex justify-content-center flex-column align-items-center">

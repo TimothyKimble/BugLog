@@ -1,17 +1,17 @@
 <template>
   <div class="bugs row w-100 m-0 bugs">
     <div class="col-md-12 p-4 ">
-      <div class="row m-0 w-100 d-flex justify-content-between bugsBackground CardShadowing">
-        <div class="col-md-3 p-0">
-          <h3 class="p-3">
+      <div class="row m-0 w-100 d-flex justify-content-end bugsBackground CardShadowing">
+        <div class="col-md-12 p-0 text-center">
+          <h1 class="p-3">
             Bugs
-          </h3>
+          </h1>
         </div>
-        <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-          <button class="btn btn-success m-3" data-toggle="modal" data-target="#reportModal" aria-label="Create Bug">
-            <h6 class="">
+        <div class="col-md-1 p-0 d-flex align-items-center justify-content-end">
+          <button class="btn btn-success m-3" data-toggle="modal" data-target="#reportModal" aria-label="Create Bug" v-if="user.isAuthenticated">
+            <h5 class="">
               Report
-            </h6>
+            </h5>
           </button>
         </div>
         <div class="col-md-12 p-3">
@@ -51,6 +51,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-md-12 p-0 text-center">
+      <h1>Report Bugs So We Can Squish Them!</h1>
     </div>
   </div>
 
@@ -208,5 +211,9 @@ background: linear-gradient(to right, #f2fcfe, #1c92d2); /* W3C, IE 10+/ Edge, F
 
 .textShadow {
     text-shadow: black 1px 1px;
+}
+
+.minBugPageHeight {
+  min-height: 80vh;
 }
 </style>
