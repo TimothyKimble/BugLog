@@ -8,9 +8,9 @@
           </h4>
           <h2>{{ bug.title }}</h2>
           <div class="d-flex row w-100 m-0 my-2 justify-content-between">
-            <div class="p-1 col-md-2 d-flex justify-content-center flex-column align-items-center">
+            <div class="p-1 col-md-3 d-flex justify-content-center flex-column align-items-center">
               <img class="rounded-pill w-50 p-0" :src="bug.creator?.picture" alt="">
-              <h5 class="mt-2">
+              <h5 class="mt-2 w-100 wrap-text">
                 Reported By: {{ bug.creator?.name }}
               </h5>
             </div>
